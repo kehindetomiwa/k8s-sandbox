@@ -12,3 +12,16 @@ export APISERVER=$(kubectl config view | grep https | cut -f 2- -d ":" | tr -d "
 echo $APISERVER
 kubectl cluster-info
 curl $APISERVER --header "Authorization: Bearer $TOKEN" --insecure
+
+kubectl apply -f nginx.yaml
+kubectl run firstrun --image=nginx
+
+kubectl run firstrun --image=nginxx --port=88 --dry-run=client -o yaml > secondrun.yaml
+
+kubectl replace --force -f secondrun.yaml # to replace already created pod that failed or want to update
+kubectl create deployment mynginx --image=nginx:1.15-alpine
+
+kubectl get deploy,rs,po -l app=mynginx
+kubectl scale deploy mynginx --replicas=3
+kubectl set image deployment mynginx nginx=nginx:1.16-alpine
+kubectl rollout undo deployment mynginx --to-revision=1
