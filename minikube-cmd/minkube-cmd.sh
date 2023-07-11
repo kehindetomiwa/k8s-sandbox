@@ -10,6 +10,8 @@ minikube start --driver=virtualbox -n 3 --container-runtime=containerd --cni=cal
 
 minikube start --driver=hyperkit -n 3 --kubernetes-version=v1.25.3 --container-runtime=containerd --cni=calico
 
+minikube start --driver=hyperkit -n 3 --kubernetes-version=v1.25.3 --container-runtime=containerd --cni=docker
+
 
 minikube addons list
 minikube addons enable metrics-server

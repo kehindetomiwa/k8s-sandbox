@@ -25,3 +25,8 @@ kubectl get deploy,rs,po -l app=mynginx
 kubectl scale deploy mynginx --replicas=3
 kubectl set image deployment mynginx nginx=nginx:1.16-alpine
 kubectl rollout undo deployment mynginx --to-revision=1
+
+kubectl create deployment deploy-hello --image=pbitty/hello-from:latest --port=80 --replicas=3
+kubectl expose deployment deploy-hello --type=NodePort
+
+kubectl get deploy,svc,ep -l app=deploy-hello --show-labels
