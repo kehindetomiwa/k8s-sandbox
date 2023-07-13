@@ -20,6 +20,9 @@ minikube addons list
 minikube dashboard 
 
 
+minikube addons enable ingress
+
+
 #setup users, role, role binding for nameapace
 
 #generate key (user is victoryhouse)

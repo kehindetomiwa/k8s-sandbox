@@ -30,3 +30,39 @@ kubectl create deployment deploy-hello --image=pbitty/hello-from:latest --port=8
 kubectl expose deployment deploy-hello --type=NodePort
 
 kubectl get deploy,svc,ep -l app=deploy-hello --show-labels
+
+kubectl create configmap my-config --from-literal=key1=value1 --from-literal=key2=value2
+kubectl get configmaps my-config -o yaml
+
+
+kubectl run redis --image=redis123 --dry-run -o yaml
+
+#edit a pod
+kubectl get pod <pod-name> -o yaml > pod-definition.yaml
+# then edit the file
+kubectl edit pod <pod-name>
+
+kubectl create -f customer1-configmap.yaml
+kubectl create configmap permission-config --from-file=<path/to/>permission-reset.properties
+
+#config map fromfile
+kubectl create configmap green-web-cm --from-file=green/index.html 
+
+#secrets
+kubectl create secret generic my-password --from-literal=password=mysqlpassword
+kubectl get secret my-password
+kubectl describe secret my-password
+
+#data map (password encoded in base 64 and used in manifest file
+echo mysqlpassword | base64
+
+# secret from file
+
+# 1. encode password
+echo mysqlpassword | base64
+
+# 2. push to a file 
+echo -n 'bXlzcWxwYXNzd29yZAo=' > password.txt
+
+# 3 create the secret 
+kubectl create secret generic my-file-password --from-file=password.txt
