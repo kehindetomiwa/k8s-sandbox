@@ -66,3 +66,21 @@ echo -n 'bXlzcWxwYXNzd29yZAo=' > password.txt
 
 # 3 create the secret 
 kubectl create secret generic my-file-password --from-file=password.txt
+
+kubectl scale --replicas=6 -f replicaset-definition.yaml
+
+#change parmanetly to a namespace
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+
+kubectl run webapp-color --image=nginx --dry-run=client -o yaml > nginx-pod.yaml
+
+kubectl get pod <pod-name> -o yaml 
+
+kubectl create secret generic db-secret --from-literal=DB_Host=sql01 --from-literal=DB_User=root --from-literal=DB_Password=password123
+
+kubectl replace --force -f <yaml-file>
+
+kubectl exec ubuntu-sleeper -- whoami
+
+kubectl create serviceaccount dasboard-sa
