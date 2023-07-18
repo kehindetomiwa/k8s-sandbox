@@ -84,3 +84,31 @@ kubectl replace --force -f <yaml-file>
 kubectl exec ubuntu-sleeper -- whoami
 
 kubectl create serviceaccount dasboard-sa
+
+kubectl taint nodes controlplane node-role.kubernetes.io/control-plane:NoSchedule-   #node/controlplane untainted
+kubectl taint node node01 spray=mortein:NoSchedule
+kubectl describe node node01 | grep -i taint
+
+#inspect log
+kubectl -n elastic-stack logs kibana
+#to inspect log in a directory, exec to the pode and cat the file
+kubectl -n elastic-stack exec -it app -- cat /log/app.lo
+
+#update
+kubectl apply -f deployment/aapp
+kubectl set image deployment/aapp image=image
+
+#check history
+kubectl rollout history deployment nginx --revision=1
+
+#record command used to create update
+kubectl set image deployment nginx nginx=nginx:1.17 --record
+
+kubectl rollout status deployment/aapp
+kubectl rollout history deployment/aapp
+kubectl rollout undo deployment/aapp
+
+
+kubectl create job throw-dice-job --image=kodekloud/throw-dice --dry-run=client -o yaml
+
+kubectl logs <pod-name>
