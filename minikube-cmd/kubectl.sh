@@ -96,7 +96,7 @@ kubectl -n elastic-stack exec -it app -- cat /log/app.lo
 
 #update
 kubectl apply -f deployment/aapp
-kubectl set image deployment/aapp image=image
+kubectl set image deployment/aapp image=imagef
 
 #check history
 kubectl rollout history deployment nginx --revision=1
@@ -112,3 +112,8 @@ kubectl rollout undo deployment/aapp
 kubectl create job throw-dice-job --image=kodekloud/throw-dice --dry-run=client -o yaml
 
 kubectl logs <pod-name>
+
+#access k8s using curl command
+curl -v -k https://master-node-ip:4554/api/vi/pods -u "user1:password123"
+or use token
+curl -v -k https://master-node-ip:4554/api/vi/pods --header "Aithorization: Bearer <token>"
