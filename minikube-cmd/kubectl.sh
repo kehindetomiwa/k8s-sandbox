@@ -117,3 +117,38 @@ kubectl logs <pod-name>
 curl -v -k https://master-node-ip:4554/api/vi/pods -u "user1:password123"
 or use token
 curl -v -k https://master-node-ip:4554/api/vi/pods --header "Aithorization: Bearer <token>"
+
+kubectl describe pod kube-apiserver-controlplane -n kube-system
+
+#create rolebinding and role
+
+kubectl create role developer --namespace=default --verb=list,create,delete --resource=pods
+kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user
+
+
+kubectl auth can-i list nodes --as michelle
+
+kubectl api-resources
+kubectl auth can-i list storageclasses --as michelle.
+
+kubectl create clusterrole storage-admin --resources=persistentvolumes,storageclasses --verb=list,create,get,watch
+kubectl create clusterrolebinding michelle-storage-admin --user=michelle --clusterrole=storage-admin
+
+kubectl exec -it kube-apiserver-controlplane -n kube-system -- kube-apiserver -h | grep 'enable-admission-plugins'
+
+#list all enabled and disabled plugins 
+ps -ef | grep kube-apiserver | grep admission-plugin
+
+kubectl -n webhook-demo create secret tls webhook-server-tls --cert "/root/keys/webhook-server-tls.crt" --key "/root/keys/webhook-server-tls.key"
+
+
+kubectl describe crd globals.traffic.controller
+
+kubectl scale deployment --replicas=1 frontend-v2
+
+
+
+
+
+
+
